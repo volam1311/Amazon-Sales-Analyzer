@@ -4,3 +4,7 @@ matplotlib
 ipykernel
 sqlalchemy
 pymysql
+pathlib
+logging
+cryptography
+dotenv
