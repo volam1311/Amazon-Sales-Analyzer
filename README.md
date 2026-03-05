@@ -2,6 +2,8 @@
 
 A **data pipeline** and **data warehouse** project for Amazon product and review data. It ingests raw CSV data, cleans it, loads it into MySQL, and provides a star-schema warehouse (dimension and fact tables) for analysis.
 
+Dashboards for the project is here: https://app.powerbi.com/view?r=eyJrIjoiYjU3M2Q4N2QtY2FhMi00MmVjLTg2YTAtY2U2ZGJmODJlMDcyIiwidCI6Ijc4NGU5YWE4LWI4ZjQtNGFhOS1iMTgzLTE5ODExNjE5YjllZSJ9
+
 ---
 
 ## Overview
@@ -13,6 +15,7 @@ The project:
 3. **Exports** cleaned data to `data/cleaned_data.csv`
 4. **Loads** cleaned data into MySQL (staging table `amazon_products`)
 5. **Warehouse** SQL scripts define a star schema (dimensions + fact table) and load logic
+6. **Analytics** Using PowerBI for creating dashboard and gaining insights
 
 Analysis and experimentation can be done in the `notebooks/experiments.ipynb` Jupyter notebook.
 
@@ -40,6 +43,9 @@ Amazon DA/
 │   └── fact_tables_load.sql  # Load fact from amazon_products + dims
 ├── notebooks/
 │   └── experiments.ipynb    # EDA and analysis
+├── img/                     # Screenshots and diagrams
+│   ├── pipeline_result.png  # Pipeline run output
+│   └── star_schema.png      # Star schema diagram
 ├── requirements.txt
 ├── .env.example         # Template for environment variables
 └── README.md
@@ -117,34 +123,7 @@ From the **project root**:
 python src/run_pipeline.py
 ```
 
-Or as a module:
-
-```bash
-python -m src.run_pipeline
-```
-
-This will:
-
-1. Load `data/raw_data.csv`
-2. Clean the data
-3. Save `data/cleaned_data.csv`
-4. Create/use MySQL table `amazon_products` and load the cleaned data
-
-### Run without MySQL (CSV only)
-
-To only produce the cleaned CSV and skip the database:
-
-```bash
-python src/run_pipeline.py --no-db
-```
-
-### Skip saving cleaned CSV
-
-If you only want to load into MySQL and not write `cleaned_data.csv`:
-
-```bash
-python src/run_pipeline.py --no-csv
-```
+![Pipeline result](img/pipeline_result.png)
 
 ---
 
@@ -190,6 +169,8 @@ USE amazon_da;
 
 5. **Load fact**  
    Run `warehouse/fact_tables_load.sql` to populate the fact table by joining `amazon_products` to the dimension tables.
+
+
 
 Column names in the load scripts must match your `amazon_products` and fact table definitions; adjust if your schema uses different names (e.g. `discount_percentage` vs `discounted_percentage`).
 
