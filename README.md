@@ -51,7 +51,6 @@ Amazon DA/
 └── README.md
 ```
 
-
 ---
 
 ## Requirements
@@ -170,9 +169,42 @@ USE amazon_da;
 5. **Load fact**  
    Run `warehouse/fact_tables_load.sql` to populate the fact table by joining `amazon_products` to the dimension tables.
 
+![Star schema](img/star_schema.png)
 
 
-Column names in the load scripts must match your `amazon_products` and fact table definitions; adjust if your schema uses different names (e.g. `discount_percentage` vs `discounted_percentage`).
+* **Note**: Column names in the load scripts must match your `amazon_products` and fact table definitions; adjust if your schema uses different names (e.g. `discount_percentage` vs `discounted_percentage`).
+
+---
+
+## Analytics process:
+
+**Executive summary:**
+
+![Summary](img/summary.png)
+
+We can see that the total revienue is 4.44 millions with 1413 products being sold for 1147 users. The average rating is pretty high at around 4.09/5.
+
+The rating distributions is a little bit left-skewed with the median at around 4.3, there are also some outliers as with some customer giving a really low score(2) and some giving the maximum score(5).
+
+The top sales products are Sony Bravia 164cm with the revenue about 78000, followed by OnePlus 163.8cm at aroung 62000.
+
+**Product Performance:**
+
+![product](img/product.png)
+
+We can see that the Fire Boltt Ninja Call Pro Plus 1.83 Smart Watch is the best seller with 5 products been sold, while the Computer and Accessories for USB cables has the most products been sold in the Amazon app.
+
+Most products that has the high revenue also has the high ratings, all nearly around 4.3/5 and the OnePlus, which has the most products sold, receive ta really high rating score from customer (4.7/5).
+
+Even though the Computer and Accessories for USB cables account for the most products sold in the app, the Electronics for Home Theater actually gains the most revenue at aroung 1550000.
+
+**Customer Behavior:**
+
+![customer](img/customer.png)
+
+We can see that most products only has 1 rating from the customer, with the highest is only 2 from both Amazon HDMI Cable and JBL Wired In Ear product.
+
+The highest average rating for products belong to Amazon Basic Wireless Mouse and Syncire LTG to USB with both receive the score of 5/5. 
 
 ---
 
@@ -186,7 +218,6 @@ Column names in the load scripts must match your `amazon_products` and fact tabl
 ## Development
 
 - **Notebooks**: Use `notebooks/experiments.ipynb` for exploration and visualizations (e.g. matplotlib). The cleaning logic in `src/cleaning/__init__.py` is kept in sync with the notebook.
-- **Tests**: Run the pipeline once with `--no-db` to validate ingestion and cleaning without a database.
 
 ---
 
